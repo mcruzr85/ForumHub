@@ -30,15 +30,16 @@ public class TopicoController {
 
     }
 
-  /*  @GetMapping
-    public Page<DadosListagemTopicoDto> listar(@PageableDefault(size=10, sort = {"titulo"}) Pageable paginacao){
-     return repository.findAll(paginacao).map(DadosListagemTopicoDto::new);
-
-    }*/
-
     @GetMapping
-    public List<DadosListagemTopicoDto> listar() {
-        return repository.findAll().stream().map(DadosListagemTopicoDto::new).toList();
+    public ResponseEntity<Page<DadosListagemTopicoDto>> listar(@PageableDefault(size=10, sort = {"titulo"}) Pageable paginacao){
+     var page = repository.findAll(paginacao).map(DadosListagemTopicoDto::new);
+     return ResponseEntity.ok(page);
+
+    }
+
+    //@GetMapping
+    //public List<DadosListagemTopicoDto> listar() {
+      //  return repository.findAll().stream().map(DadosListagemTopicoDto::new).toList();}
 
 
-}}
+}
