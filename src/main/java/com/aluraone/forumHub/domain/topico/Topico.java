@@ -1,6 +1,7 @@
 package com.aluraone.forumHub.domain.topico;
 
 import com.aluraone.forumHub.domain.curso.Curso;
+import com.aluraone.forumHub.domain.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -32,6 +33,10 @@ public class Topico {
     @ManyToOne
     @JoinColumn(name="id_curso")//nome da coluna na tabela
     private Curso curso;
+
+    @ManyToOne
+    @JoinColumn(name="id_autor")//nome da coluna na tabela
+    private Usuario autor;
 
 
     public Topico(DadosTopicoDto topicoDto){
