@@ -56,7 +56,7 @@ Dependências para adicionar ao criar o projeto com Spring Initializr:
 
 Diagrama Proposto para o Banco de Dados
 ---------------------------------------------
-![diagrama banco de dados.jpg](src%2Fmain%2Fresources%2Fdiagrama%20banco%20de%20dados.jpg)
+![diagramabancodados.jpg](src%2Fmain%2Fresources%2Fdiagramabancodados.jpg)
 
 ### Autores
 Desenvolvido por
