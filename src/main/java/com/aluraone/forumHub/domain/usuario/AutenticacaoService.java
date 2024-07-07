@@ -14,8 +14,9 @@ public class AutenticacaoService implements UserDetailsService {
     private UsuarioRepository repository;
 
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return repository.FindByLogin(username);
+    @Override public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+
+        return repository.findByEmail(login);
+        //email é o nome do atributo que representa o login
     }
 }

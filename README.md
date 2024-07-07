@@ -1,4 +1,4 @@
-Fórum Hub API Rest - Programa ONE parceria Oracle & Alura
+🎀 Fórum Hub API Rest - Programa ONE - Parceria Oracle & Alura
 ------------------------------------------------------------
 Este é o projeto Forum Hub, terceiro challenge da formação ONE | Fase 3 - Especialização Back-End.
 
@@ -6,11 +6,11 @@ O objetivo deste desafio foi proporcionar uma API Rest desenvolvida com o Spring
 A persistencia dos dados na API é feita em um banco de dados MySQL por meio de Spring Data JPA.
 Os processos de autenticação e autentificação para garantir a segurança dos dados foram feitos com o Spring Security usando a libreria auth0 para o processo de geração de tokens com o padrão JWT.
 
-Funcionalidades
+⚜️ Funcionalidades
 ------------------------------------------------------------
 Tópicos
 Criar um novo tópico: Permite aos usuários criar novos tópicos.
-Listar todos os tópicos: Recupera e exibe todos os tópicos criados. ***Exibição organizada dos resultados com paginação (10 registros por página), ordenados pela data de criação em ordem ascendente, incluindo informações sobre o autor e o curso.
+Listar todos os tópicos: Recupera e exibe todos os tópicos criados com paginação (10 registros por página), ordenados pela data de criação em ordem ascendente, incluindo informações sobre o autor e o curso.
 Mostrar um tópico específico: Exibe os detalhes de um tópico específico.
 Atualizar um tópico: Permite a atualização das informações de um tópico.
 Eliminar um tópico: Inativa um tópico no banco de dados.
@@ -27,7 +27,7 @@ Mostrar um curso específico: Exibe os detalhes de um curso específico.
 Atualizar um curso: Permite a atualização das informações de um curso.
 Eliminar um curso: Remove um curso do sistema.
 
-Certifique-se de ter os seguintes programas, arquivos e versões:
+📌 Certifique-se de ter os seguintes programas, arquivos e versões:
 ------------------------------------------------------------
 * Java JDK: versão: 17 em diante -Download the Latest Java LTS Free
 * Maven: versão 4 em diante
@@ -35,7 +35,7 @@ Certifique-se de ter os seguintes programas, arquivos e versões:
 * MySQL: versão 8 em diante
 * IDE (Ambiente de desenvolvimento integrado) IntelliJ IDEA- opcional -
 
-Configuração ao criar o projecto com Spring Initializr:
+📌 Configuração e dependências para adicionar ao criar o projecto com Spring Initializr:
 -------------------------------------------------------
 
 * Java (versão 17 em diante) 
@@ -43,8 +43,6 @@ Configuração ao criar o projecto com Spring Initializr:
 * Spring Boot
 * Projeto em JAR
 
-Dependências para adicionar ao criar o projeto com Spring Initializr:
------------------------------------------------------------------------
 * Lombok
 * Spring Web
 * Spring Boot DevTools
@@ -54,13 +52,12 @@ Dependências para adicionar ao criar o projeto com Spring Initializr:
 * Validation
 * Spring Security
 
-Diagrama Proposto para o Banco de Dados
+⚜️ Diagrama Proposto para o Banco de Dados
 ---------------------------------------------
 ![diagramabancodados.jpg](src%2Fmain%2Fresources%2Fdiagramabancodados.jpg)
 
-### Autores
 Desenvolvido por
-
+------------------
 | [<img loading="lazy" src="https://avatars.githubusercontent.com/u/110754595?v=4" width=115><br> <sub>Meybis Cruz Rodriguez</sub>](https://github.com/mcruzr85) |
 | :---: |
 <br>
