@@ -21,6 +21,7 @@ public class Curso {
     private Long id;
 
     private String nome;
+    private boolean status;
 
 
     @OneToMany(mappedBy = "curso")
@@ -30,11 +31,11 @@ public class Curso {
     public Curso(DadosCursoDto dto){
         this.nome = dto.nome();
     }
-
+/*
     public Curso(Long id, String nome){
         this.id = id;
         this.nome = nome;
-    }
+    }*/
 
 
 }

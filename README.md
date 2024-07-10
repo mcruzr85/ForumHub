@@ -4,7 +4,7 @@ Este é o projeto Forum Hub, terceiro challenge da formação ONE | Fase 3 - Esp
 
 O objetivo deste desafio foi proporcionar uma API Rest desenvolvida com o Spring Boot como backend de um fórum e discussão, o  projeto gerencia tópicos permitindo a criação, listagem, atualização e exclusão de usuários, cursos e tópicos, seguindo as melhores práticas do modelo REST *** incluindo um CRUD completo, paginação, autenticação via JWT e validações de dados.
 A persistencia dos dados na API é feita em um banco de dados MySQL por meio de Spring Data JPA.
-Os processos de autenticação e autentificação para garantir a segurança dos dados foram feitos com o Spring Security usando a libreria auth0 para o processo de geração de tokens com o padrão JWT.
+Os processos de autenticação e autorização para garantir a segurança dos dados foram feitos com o Spring Security usando a libreria auth0 para o processo de geração de tokens com o padrão JWT.
 
 ⚜️ Funcionalidades
 ------------------------------------------------------------
@@ -34,10 +34,10 @@ Eliminar um curso: Remove um curso do sistema.
 * Spring Boot: versão 3 em diante - https://start.spring.io/
 * MySQL: versão 8 em diante
 * IDE (Ambiente de desenvolvimento integrado) IntelliJ IDEA- opcional -
+* 
 
 📌 Configuração e dependências para adicionar ao criar o projecto com Spring Initializr:
 -------------------------------------------------------
-
 * Java (versão 17 em diante) 
 * Maven (Initializr utiliza a versão 4)
 * Spring Boot

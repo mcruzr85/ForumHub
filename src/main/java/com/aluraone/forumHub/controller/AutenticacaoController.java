@@ -2,6 +2,7 @@ package com.aluraone.forumHub.controller;
 
 import com.aluraone.forumHub.domain.usuario.DadosAutenticacaoDto;
 import com.aluraone.forumHub.domain.usuario.Usuario;
+import com.aluraone.forumHub.infra.security.DadosTokenJWT;
 import com.aluraone.forumHub.infra.security.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +28,10 @@ public class AutenticacaoController {
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacaoDto dados){
 
-        var token = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
-        var autenticacao = manager.authenticate(token);
-        return ResponseEntity.ok(tokenService.gerarToken((Usuario) autenticacao.getPrincipal()));
+        var authenticationToken = new UsernamePasswordAuthenticationToken(dados.email(), dados.senha());
+        var autentication = manager.authenticate(authenticationToken);
+        var tokenJWT = tokenService.gerarToken((Usuario) autentication.getPrincipal());
+        return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
 
     }
 

@@ -1,15 +1,14 @@
 package com.aluraone.forumHub.controller;
 
-import com.aluraone.forumHub.domain.topico.DadosTopicoDto;
-import com.aluraone.forumHub.domain.topico.DadosListagemTopicoDto;
-import com.aluraone.forumHub.domain.topico.TopicoRepository;
-import com.aluraone.forumHub.domain.topico.Topico;
+import com.aluraone.forumHub.domain.topico.*;
+import com.aluraone.forumHub.service.TopicoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -22,14 +21,17 @@ public class TopicoController {
     @Autowired
     private TopicoRepository repository;
 
+    @Autowired
+    private TopicoService topicoService;
+
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosTopicoDto topicoDto, UriComponentsBuilder uriBuilder){
-        var topico = new Topico(topicoDto);
-        repository.save(topico);
-        var uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosTopicoDto topicoDto, UriComponentsBuilder uriBuilder,  Authentication authentication){
 
-        return ResponseEntity.created(uri).body(new DadosListagemTopicoDto(topico));
+        String emailUsuarioLoggeado = authentication.getName();
+        Long topicoId =  topicoService.cadastrarTopico(topicoDto, emailUsuarioLoggeado);
+        var uri = uriBuilder.path("/topicos/{id}").buildAndExpand(topicoId).toUri();
+        return ResponseEntity.created(uri).body("Tópico registrado com sucesso. Id: " + topicoId);
     }
 
 
@@ -41,24 +43,19 @@ public class TopicoController {
 
     }
 
-    //@GetMapping
-    //public List<DadosListagemTopicoDto> listar() {
-      //  return repository.findAll().stream().map(DadosListagemTopicoDto::new).toList();}
 
-    /*@PutMapping
+
+    @PutMapping("/{id}")
     @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid DadosListagemTopicoDto topicoDto ){
-        var topico =  repository.getReferenceById(topicoDto.id());
-        topico.atualizarInformacoes();
-        return ResponseEntity.ok()
-
-    }*/
+    public ResponseEntity<DadosListagemTopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid DadosTopicoDto topicoDto ){
+        topicoService.atualizarTopico(id, topicoDto);
+        return ResponseEntity.ok().body("Tópico atualizado com sucesso. Id: " + topicoId);;
+    }
 
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity excluir(@PathVariable Long id){
-        var topico = repository.getReferenceById(id);
-        topico.inactivarTopico();
+        topicoService.inativarTopico(id);
         return ResponseEntity.noContent().build();
     }
 

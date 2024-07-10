@@ -25,7 +25,7 @@ public class TrataErros {
 
     }
 
-    //Record que é usao só na classe TrataErro
+    //Record que é usado só na classe TrataErro
 
     private record DadosErroValidacao(String campo, String message){
 

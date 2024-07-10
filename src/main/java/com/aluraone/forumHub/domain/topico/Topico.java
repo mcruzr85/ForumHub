@@ -30,16 +30,16 @@ public class Topico {
 
     private boolean status;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_curso")//nome da coluna na tabela
     private Curso curso;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="id_autor")//nome da coluna na tabela
     private Usuario autor;
 
 
-    public Topico(DadosTopicoDto topicoDto){
+   /* public Topico(DadosTopicoDto topicoDto){
 
         this.titulo = topicoDto.titulo();
         this.mensagem = topicoDto.mensagem();
@@ -48,13 +48,24 @@ public class Topico {
         this.dataCriacao = LocalDateTime.now();
         this.setCurso(new Curso(topicoDto.curso().id(), topicoDto.curso().nome()));
 
-    }
+    }*/
 
     public void setCurso(Curso curso) {
         this.curso = curso;
     }
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
-    public void inactivarTopico(){
-        this.status = false;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public void setMensagem(String mensagem) {
+        this.mensagem = mensagem;
+    }
+
+    public void atualizarInformacoes() {
+
     }
 }
