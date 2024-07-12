@@ -1,6 +1,8 @@
 package com.aluraone.forumHub.infra.exceptions;
 
+import com.aluraone.forumHub.domain.ValidacaoException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -12,6 +14,7 @@ public class TrataErros {
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity trataErro404(){
+
         return ResponseEntity.notFound().build();
     }
 
@@ -25,10 +28,34 @@ public class TrataErros {
 
     }
 
-    //Record que é usado só na classe TrataErro
+    //exception lançada quando tem problema de validação no Dto
 
+    @ExceptionHandler()
+    public ResponseEntity tratarErroRegraDeNegocio(ValidacaoException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity tratarErro500(Exception ex) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro: " +ex.getLocalizedMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity handleIllegalArgumentException(IllegalArgumentException ex) {
+        return ResponseEntity.badRequest().body(ex.getMessage());
+    }
+
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity NullPointerException(NullPointerException ex) {
+        String errorMessage = "Erro NullPointerException";
+        return ResponseEntity.badRequest().body(errorMessage);
+    }
+
+
+
+    //Record que é usado só na classe TrataErro para mostrar un Json con ese formato campo e mensagem
     private record DadosErroValidacao(String campo, String message){
-
         DadosErroValidacao(FieldError fieldError){
             this(fieldError.getField(), fieldError.getDefaultMessage());
         }

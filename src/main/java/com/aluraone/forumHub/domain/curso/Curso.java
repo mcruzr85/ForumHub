@@ -27,7 +27,7 @@ public class Curso {
     @OneToMany(mappedBy = "curso")
     private List<Topico> topicos = new ArrayList<>();
 
-
+   //para criar o objeto Curso dado o Dto, se usa na hora de enviar pro banco de dados e salvar o registro
     public Curso(DadosCursoDto dto){
         this.nome = dto.nome();
     }

@@ -2,10 +2,8 @@ package com.aluraone.forumHub.service;
 
 import com.aluraone.forumHub.domain.curso.Curso;
 import com.aluraone.forumHub.domain.curso.CursoRepository;
-import com.aluraone.forumHub.domain.topico.DadosCadastroTopicoDto;
-import com.aluraone.forumHub.domain.topico.DadosTopicoDto;
-import com.aluraone.forumHub.domain.topico.Topico;
-import com.aluraone.forumHub.domain.topico.TopicoRepository;
+import com.aluraone.forumHub.domain.curso.DadosListagemCursoDto;
+import com.aluraone.forumHub.domain.topico.*;
 import com.aluraone.forumHub.domain.usuario.Usuario;
 
 import jakarta.validation.Valid;
@@ -54,7 +52,7 @@ public class TopicoService {
     public void inativarTopico(Long id){
 
         Topico topico = topicoRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Tópico não encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Tópico não encontrado"));
 
         //colocando status como falso e assim desativo o topico
         topico.setStatus(false);
@@ -64,10 +62,10 @@ public class TopicoService {
     }
 
     @Transactional
-    public void atualizarTopico(Long id, DadosTopicoDto dadosTopicoDto){
+    public DadosListagemTopicoDto atualizarTopico(Long id, DadosTopicoDto dadosTopicoDto){
 
         Topico topico = topicoRepository.findById(id)
-                .orElseThrow(() -> new IllegalStateException("Tópico não encontrado"));
+                .orElseThrow(() -> new IllegalArgumentException("Tópico não encontrado, favor conferir o id"));
 
         //atualizando os dados que vem no Dto
         if(dadosTopicoDto.titulo() != null){
@@ -78,6 +76,15 @@ public class TopicoService {
         }
 
         //atualizando o topico no banco
-        topicoRepository.save(topico);
+       Topico topicoAct = topicoRepository.save(topico);
+
+        //devolvendo o Dto com as novas informaçoes
+        return new DadosListagemTopicoDto(topicoAct);
+    }
+
+    public DadosListagemTopicoDto mostrarDetalhesTopico(Long id) {
+        Topico topico = topicoRepository.findById(id)
+                .orElseThrow(()-> new IllegalArgumentException("Tópico não encontrado, favor conferir o id"));
+        return new DadosListagemTopicoDto(topico);
     }
 }

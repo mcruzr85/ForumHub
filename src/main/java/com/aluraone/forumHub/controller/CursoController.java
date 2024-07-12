@@ -26,13 +26,13 @@ public class CursoController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCursoDto cursoDto, UriComponentsBuilder uriBuilder){
-       Long cursoId = service.cadastrarCurso(cursoDto);
-
+       DadosListagemCursoDto dto = service.cadastrarCurso(cursoDto);
+        Long cursoId = dto.id();
         var uri = uriBuilder.path("/cursos/{id}")
                   .buildAndExpand(cursoId)
                   .toUri();
-
-        return ResponseEntity.created(uri).body("Curso com Id: " + cursoId + " registrado com sucesso");
+        return ResponseEntity.created(uri).body(dto);
+       // return ResponseEntity.created(uri).body("Curso com Id: " + cursoId + " registrado com sucesso");
     }
 
     @GetMapping

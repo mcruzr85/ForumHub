@@ -20,20 +20,18 @@ public class CursoService {
 
 
     @Transactional
-    public Long cadastrarCurso(DadosCursoDto cursoDto) {
+    public DadosListagemCursoDto cadastrarCurso(DadosCursoDto cursoDto) {
         // Validando os campos do Dto
         if (cursoDto.nome() == null ) {
             throw new IllegalArgumentException("O campo Nome é obrigatorio para cadastrar um curso");
         }
 
         // Criando a entidade desde o DTO
-        Curso curso = new Curso();
-        curso.setNome(cursoDto.nome());
-
+        Curso curso = new Curso(cursoDto);
 
         // chamando o repository para salvar o curso
         Curso cursoSalvado = repository.save(curso);
-        return cursoSalvado.getId();
+        return new DadosListagemCursoDto(cursoSalvado); //.getId();
     }
 
     public Page<DadosListagemCursoDto> listarCursos(Pageable pageable) {
@@ -44,14 +42,13 @@ public class CursoService {
 
     @Transactional
     public DadosListagemCursoDto atualizarCurso(Long idCurso, DadosCursoDto cursoDto) {
-System.out.println("llego al service, id para act: " + idCurso);
         Optional<Curso> optional = repository.findById(idCurso);
         if (optional.isEmpty()) {
             throw new IllegalStateException("Não existe Curso com Id: " + idCurso);
         }
         Curso curso = optional.get();
         curso.setNome(cursoDto.nome());
-        Curso cursoAct =repository.save(curso);
+        Curso cursoAct = repository.save(curso);
         return new DadosListagemCursoDto(cursoAct);
     }
 

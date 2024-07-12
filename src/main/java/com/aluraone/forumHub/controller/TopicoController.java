@@ -43,13 +43,17 @@ public class TopicoController {
 
     }
 
-
-
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<DadosListagemTopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid DadosTopicoDto topicoDto ){
-        topicoService.atualizarTopico(id, topicoDto);
-        return ResponseEntity.ok().body("Tópico atualizado com sucesso. Id: " + topicoId);;
+       DadosListagemTopicoDto topicoActDto =  topicoService.atualizarTopico(id, topicoDto);
+        return ResponseEntity.ok().body(topicoActDto);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DadosListagemTopicoDto> mostrarTopico(@PathVariable Long id){
+        DadosListagemTopicoDto topicoDto = topicoService.mostrarDetalhesTopico(id);
+        return ResponseEntity.ok().body(topicoDto);
     }
 
     @DeleteMapping("/{id}")
