@@ -4,6 +4,7 @@ import com.aluraone.forumHub.domain.curso.Curso;
 import com.aluraone.forumHub.domain.curso.CursoRepository;
 import com.aluraone.forumHub.domain.curso.DadosCursoDto;
 import com.aluraone.forumHub.domain.curso.DadosListagemCursoDto;
+import com.aluraone.forumHub.domain.topico.Topico;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,7 +45,7 @@ public class CursoService {
     public DadosListagemCursoDto atualizarCurso(Long idCurso, DadosCursoDto cursoDto) {
         Optional<Curso> optional = repository.findById(idCurso);
         if (optional.isEmpty()) {
-            throw new IllegalStateException("Não existe Curso com Id: " + idCurso);
+            throw new IllegalArgumentException("Não existe curso com Id: " + idCurso);
         }
         Curso curso = optional.get();
         curso.setNome(cursoDto.nome());
@@ -53,10 +54,12 @@ public class CursoService {
     }
 
     //mostrar detalhes de um curso
-    public Optional<DadosListagemCursoDto> detalharCurso(Long idCurso) {
+    public DadosListagemCursoDto detalharCurso(Long idCurso) {
 
-        Optional<Curso> optionalCurso = repository.findByIdAndStatusTrue(idCurso);
-          return optionalCurso.map(optC -> new DadosListagemCursoDto(optC.getId(), optC.getNome(), optC.isStatus()));
+        Curso curso = repository.findById(idCurso)
+                .orElseThrow( () -> new IllegalArgumentException("Curso não encontrado, favor conferir o id"));
+
+          return new DadosListagemCursoDto(curso);
     }
 
 
@@ -65,7 +68,7 @@ public class CursoService {
     public void inativarCurso(Long idCurso) {
         Optional<Curso> optional = repository.findById(idCurso);
         if (optional.isEmpty()) {
-            throw new IllegalStateException("Não existe Curso com Id: " + idCurso);
+            throw new IllegalArgumentException("Não existe curso com Id: " + idCurso);
         }
 
         /*

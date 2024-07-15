@@ -1,6 +1,7 @@
 package com.aluraone.forumHub.infra.security;
 
 import com.aluraone.forumHub.domain.usuario.Usuario;
+import com.aluraone.forumHub.infra.exceptions.AuthorizationException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -49,7 +50,7 @@ public class TokenService {
                     .verify(tokenJWT)
                     .getSubject();
         } catch (JWTVerificationException exception){
-            throw new RuntimeException("Falla aquiiiiii!!!!   Token JWT inválido ou expirado!", exception);
+            throw new AuthorizationException("Token JWT inválido ou expirado!");
         }
     }
 

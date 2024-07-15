@@ -8,10 +8,10 @@ import com.aluraone.forumHub.domain.usuario.Usuario;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDateTime;
@@ -51,8 +51,8 @@ public class TopicoService {
     @Transactional
     public void inativarTopico(Long id){
 
-        Topico topico = topicoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Tópico não encontrado"));
+        Topico topico = topicoRepository.findByIdAndStatusTrue(id)
+                .orElseThrow(() -> new IllegalArgumentException("Tópico não encontrado ou desativado previamente"));
 
         //colocando status como falso e assim desativo o topico
         topico.setStatus(false);
@@ -65,7 +65,7 @@ public class TopicoService {
     public DadosListagemTopicoDto atualizarTopico(Long id, DadosTopicoDto dadosTopicoDto){
 
         Topico topico = topicoRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Tópico não encontrado, favor conferir o id"));
+                .orElseThrow(() -> new IllegalArgumentException("Tópico não encontrado, favor conferir o id."));
 
         //atualizando os dados que vem no Dto
         if(dadosTopicoDto.titulo() != null){
@@ -84,7 +84,12 @@ public class TopicoService {
 
     public DadosListagemTopicoDto mostrarDetalhesTopico(Long id) {
         Topico topico = topicoRepository.findById(id)
-                .orElseThrow(()-> new IllegalArgumentException("Tópico não encontrado, favor conferir o id"));
+                .orElseThrow(()-> new IllegalArgumentException("Tópico não encontrado, favor conferir o id."));
         return new DadosListagemTopicoDto(topico);
+    }
+
+    public Page<DadosListagemTopicoDto> listarTopicos(Pageable paginacao) {
+        Page<Topico> pageTopicos = topicoRepository.findByStatusTrue(paginacao);
+        return pageTopicos.map(topico -> new DadosListagemTopicoDto(topico));
     }
 }

@@ -8,8 +8,6 @@ public record DadosTopicoDto(
 
         @NotBlank(message = "Campo titulo é obrigatorio")
         String titulo,
-        @NotBlank
+        @NotBlank(message = "Campo mensagem é obrigatorio")
         String mensagem,
-        //UsuarioIdDto autor,
-
-        DadosListagemCursoDto curso){}
+        @NotNull (message = "Campo id del curso é obrigatorio") DadosListagemCursoDto curso){}

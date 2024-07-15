@@ -1,6 +1,7 @@
 package com.aluraone.forumHub.infra.security;
 
 import com.aluraone.forumHub.domain.usuario.UsuarioRepository;
+import com.aluraone.forumHub.infra.exceptions.AuthorizationException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +24,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Autowired
     UsuarioRepository repository;
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException, AuthorizationException {
         var tokenJWT = recuperarTokenDoCabecalho(request);
         System.out.println(tokenJWT);
         if(tokenJWT != null){

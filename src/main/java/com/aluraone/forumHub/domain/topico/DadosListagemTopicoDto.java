@@ -5,12 +5,12 @@ import com.aluraone.forumHub.domain.curso.DadosListagemCursoDto;
 import java.time.LocalDateTime;
 
 public record DadosListagemTopicoDto(
-        Long id,
+    Long id,
     String titulo,
     String mensagem,
-       LocalDateTime dataCriacao,
+    LocalDateTime dataCriacao,
     boolean status,
-     DadosListagemCursoDto curso
+    DadosListagemCursoDto curso
 ){
 
 

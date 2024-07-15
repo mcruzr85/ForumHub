@@ -38,6 +38,19 @@ public class Topico {
     @JoinColumn(name="id_autor")//nome da coluna na tabela
     private Usuario autor;
 
+    @Override
+    public String toString() {
+        return "Topico{" +
+                "id=" + id +
+                ", titulo='" + titulo + '\'' +
+                ", mensagem='" + mensagem + '\'' +
+                ", dataCriacao=" + dataCriacao +
+                ", status=" + status +
+                ", curso=" + curso +
+                ", autor=" + autor +
+                '}';
+    }
+
 
    /* public Topico(DadosTopicoDto topicoDto){
 

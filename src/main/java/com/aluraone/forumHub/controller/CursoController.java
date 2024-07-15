@@ -3,6 +3,7 @@ package com.aluraone.forumHub.controller;
 import com.aluraone.forumHub.domain.curso.DadosCursoDto;
 import com.aluraone.forumHub.domain.curso.DadosListagemCursoDto;
 import com.aluraone.forumHub.service.CursoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cursos")
+@SecurityRequirement(name = "bearer-key")
 public class CursoController {
 
     @Autowired
@@ -36,7 +38,7 @@ public class CursoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemCursoDto>> listar(@PageableDefault(size  =  10,sort= {"id"}) Pageable paginacao) {
+    public ResponseEntity<Page<DadosListagemCursoDto>> listar(@PageableDefault(size = 10,sort= {"id"}) Pageable paginacao) {
             var pages = service.listarCursos(paginacao);
             return ResponseEntity.ok(pages);   }
 
@@ -64,10 +66,8 @@ public class CursoController {
 
     @GetMapping("/{id}")
     public ResponseEntity mostrarDetalhesCurso(@PathVariable Long id) {
-        Optional<DadosListagemCursoDto> optCursoDto =  service.detalharCurso(id);
-        return optCursoDto
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        DadosListagemCursoDto cursoDto =  service.detalharCurso(id);
+        return ResponseEntity.ok().body(cursoDto);
     }
 
 }

@@ -21,8 +21,19 @@ public class Curso {
     private Long id;
 
     private String nome;
+
+
+
     private boolean status;
 
+    @Override
+    public String toString() {
+        return "Curso{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", status=" + status +
+                '}';
+    }
 
     @OneToMany(mappedBy = "curso")
     private List<Topico> topicos = new ArrayList<>();
@@ -30,12 +41,7 @@ public class Curso {
    //para criar o objeto Curso dado o Dto, se usa na hora de enviar pro banco de dados e salvar o registro
     public Curso(DadosCursoDto dto){
         this.nome = dto.nome();
+        this.status = true;
     }
-/*
-    public Curso(Long id, String nome){
-        this.id = id;
-        this.nome = nome;
-    }*/
-
 
 }
