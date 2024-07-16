@@ -19,21 +19,8 @@ public class Curso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String nome;
-
-
-
     private boolean status;
-
-    @Override
-    public String toString() {
-        return "Curso{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", status=" + status +
-                '}';
-    }
 
     @OneToMany(mappedBy = "curso")
     private List<Topico> topicos = new ArrayList<>();

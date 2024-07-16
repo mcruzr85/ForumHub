@@ -4,6 +4,7 @@ import com.aluraone.forumHub.domain.curso.Curso;
 import com.aluraone.forumHub.domain.curso.CursoRepository;
 import com.aluraone.forumHub.domain.curso.DadosListagemCursoDto;
 import com.aluraone.forumHub.domain.topico.*;
+import com.aluraone.forumHub.domain.topico.validacoes.ValidarCadastroDadosNaoDuplicados;
 import com.aluraone.forumHub.domain.usuario.Usuario;
 
 import jakarta.validation.Valid;
@@ -28,14 +29,22 @@ public class TopicoService {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private ValidarCadastroDadosNaoDuplicados validador;
+
     @Transactional
-    public Long cadastrarTopico(@RequestBody @Valid DadosTopicoDto dados, String emailUsuarioLoggeado) {
+    public Long cadastrarTopico(@RequestBody @Valid DadosCadastroTopicoDto dados, String emailUsuarioLoggeado) {
+
+     //chamando mi clase validadora
+       validador.validar(dados.titulo(), dados.mensagem());
+
 
         //usuario loggeado
         Usuario usuarioLoggeado = usuarioService.findByEmail(emailUsuarioLoggeado);
 
         //curso
-       Optional cursoOpt = cursoRepository.findById(dados.curso().id());
+       Long idCurso = dados.curso().id();
+       Optional cursoOpt = cursoRepository.findById(idCurso);
 
         if (cursoOpt.isPresent()) {
             Curso curso = (Curso) cursoOpt.get();
@@ -43,7 +52,7 @@ public class TopicoService {
             Topico topicoSalvado = topicoRepository.save(topico);
             return topicoSalvado.getId();
         }else{
-            throw new IllegalArgumentException("O ID do Curso não é válido");
+            throw new IllegalArgumentException("O id do curso não é válido");
         }
     }
 
@@ -63,9 +72,11 @@ public class TopicoService {
 
     @Transactional
     public DadosListagemTopicoDto atualizarTopico(Long id, DadosTopicoDto dadosTopicoDto){
-
-        Topico topico = topicoRepository.findById(id)
+         Topico topico = topicoRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Tópico não encontrado, favor conferir o id."));
+
+         //validando se ja tem topico com esse titulo e mensagem
+        validador.validar(dadosTopicoDto.titulo(), dadosTopicoDto.mensagem());
 
         //atualizando os dados que vem no Dto
         if(dadosTopicoDto.titulo() != null){
@@ -83,6 +94,7 @@ public class TopicoService {
     }
 
     public DadosListagemTopicoDto mostrarDetalhesTopico(Long id) {
+
         Topico topico = topicoRepository.findById(id)
                 .orElseThrow(()-> new IllegalArgumentException("Tópico não encontrado, favor conferir o id."));
         return new DadosListagemTopicoDto(topico);
@@ -90,6 +102,9 @@ public class TopicoService {
 
     public Page<DadosListagemTopicoDto> listarTopicos(Pageable paginacao) {
         Page<Topico> pageTopicos = topicoRepository.findByStatusTrue(paginacao);
-        return pageTopicos.map(topico -> new DadosListagemTopicoDto(topico));
+        return pageTopicos.map(DadosListagemTopicoDto::new);
     }
+
+
+
 }

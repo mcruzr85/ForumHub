@@ -4,12 +4,11 @@ Terceiro challenge da formação ONE | Fase 3 - Especialização Back-End.
 
 
 
-
 🎀 Resumo do projeto
 ------------------------------------------------------------
 Projeto em andamento que tem como objetivo proporcionar uma API Rest desenvolvida com o Spring Boot que seria o backend de um fórum de discussão. O projeto gerencia tópicos permitindo a criação, listagem, atualização e exclusão de usuários, cursos e tópicos, seguindo as melhores práticas do modelo REST. Inclui um CRUD completo para tópicos e cursos, paginação, autenticação via JWT e validações de dados.
 A persistencia dos dados na API é feita em um banco de dados MySQL por meio de Spring Data JPA.
-Os processos de autenticação e autorização para garantir a segurança dos dados foram feitos com o Spring Security usando a libreria auth0 para o processo de geração de tokens com o padrão JWT.
+Os processos de autenticação e autorização para garantir a segurança dos dados foram feitos com o Spring Security usando a libreria auth0 para o processo de geração de tokens com o padrão JWT. A documentação da API é gerada automaticamente usando SpringDoc.
 
 ⚜️ Funcionalidades do projeto
 ------------------------------------------------------------
@@ -18,6 +17,7 @@ Os processos de autenticação e autorização para garantir a segurança dos da
 Tópicos
 - Criar um novo tópico: Permite o registro de novos tópicos.
 - Listar todos os tópicos: Recupera e exibe todos os tópicos criados com paginação (10 registros por página), ordenados pelo titulo, incluindo informações sobre o autor e o curso. (Não precisa  token)
+![listagemtopicos.jpg](src%2Fmain%2Fresources%2Flistagemtopicos.jpg)
 - Mostrar um tópico específico: Exibe os detalhes de um tópico específico.
 - Atualizar um tópico: Permite atualizar as informações de um tópico.
 - Eliminar um tópico: Inativa um tópico no banco de dados.
@@ -28,6 +28,8 @@ Cursos
 - Mostrar um curso específico: Exibe os detalhes de um curso específico.
 - Atualizar um curso: Permite atualizar as informações de um curso.
 - Eliminar um curso: Inativa um curso no banco de dados.
+
+
 
 
 📌 Tecnologías
@@ -54,6 +56,7 @@ Cursos
 * Validation
 * Spring Security
 * auth0
+* SpringDoc
 
 ⚜️ Diagrama Proposto para o Banco de Dados
 ---------------------------------------------

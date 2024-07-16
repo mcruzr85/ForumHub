@@ -28,7 +28,7 @@ public class TopicoController {
     @PostMapping
     @Transactional
     @SecurityRequirement(name = "bearer-key")
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosTopicoDto topicoDto, UriComponentsBuilder uriBuilder,  Authentication authentication){
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroTopicoDto topicoDto, UriComponentsBuilder uriBuilder,  Authentication authentication){
 
         String emailUsuarioLoggeado = authentication.getName();
         Long topicoId =  topicoService.cadastrarTopico(topicoDto, emailUsuarioLoggeado);
@@ -42,8 +42,9 @@ public class TopicoController {
     public ResponseEntity<Page<DadosListagemTopicoDto>> listar(@PageableDefault(size=10, sort = {"titulo"}) Pageable paginacao){
         var page = topicoService.listarTopicos(paginacao);
          return ResponseEntity.ok(page);
-
     }
+
+
 
     @PutMapping("/{id}")
     @Transactional

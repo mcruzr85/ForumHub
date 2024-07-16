@@ -31,11 +31,11 @@ public class Topico {
     private boolean status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_curso")//nome da coluna na tabela
+    @JoinColumn(name="curso_id")//nome da coluna na tabela
     private Curso curso;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="id_autor")//nome da coluna na tabela
+    @JoinColumn(name="autor_id")//nome da coluna na tabela
     private Usuario autor;
 
     @Override
@@ -78,7 +78,4 @@ public class Topico {
         this.mensagem = mensagem;
     }
 
-    public void atualizarInformacoes() {
-
-    }
 }
